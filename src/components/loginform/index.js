@@ -5,6 +5,7 @@ class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.onLoginSubmit = this.onLoginSubmit.bind(this);
+        this.onLogoutButtonClick = this.onLogoutButtonClick.bind(this);
         this.state = {
         }
     }
@@ -22,7 +23,7 @@ class LoginForm extends Component {
     }
     
 
-    onLoginSubmit(event) {
+    onLoginSubmit() {
         var myHeaders = new Headers();
         var payload = JSON.stringify({
             'email': this.email.value,
@@ -49,11 +50,21 @@ class LoginForm extends Component {
         });
     }
 
+    onLogoutButtonClick() {
+        this.setState({
+            user: ''
+        });
+        localStorage.removeItem('user');
+    }
+
     render() {
         if (this.state.user) {
             return (
                 <div>
                     <h1>You are logged in</h1>
+                    <a href="javascript:;">
+                        <button onClick={() => {this.onLogoutButtonClick()}}>Logout</button>
+                    </a>
                 </div>
             )
         }
@@ -65,7 +76,7 @@ class LoginForm extends Component {
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" ref={password => this.password = password}/>
                 <br/>
-                <button onClick={(e) => this.onLoginSubmit(e)}>Login</button>
+                <button onClick={() => this.onLoginSubmit()}>Login</button>
             </div>
         );
     }
