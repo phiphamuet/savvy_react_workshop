@@ -9,6 +9,19 @@ class LoginForm extends Component {
         }
     }
 
+    componentDidMount() {
+        try {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                this.setState({ user });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
+
     onLoginSubmit(event) {
         var myHeaders = new Headers();
         var payload = JSON.stringify({
@@ -29,6 +42,7 @@ class LoginForm extends Component {
             this.setState({
                 user: body.data
             });
+            localStorage.setItem('user', JSON.stringify(body.data));
         })
         .catch(error => {
             console.log(error)
