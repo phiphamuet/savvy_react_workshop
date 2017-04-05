@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const LoginForm = ({user, onLogoutButtonClick, onLoginSubmit,
+const LoginForm = ({auth, onLogoutButtonClick, onLoginSubmit,
     handleChangeCredential}) => {
-    if (user.token) {
+    if (auth.token) {
         return (
             <div>
                 <a href="javascript:;">
@@ -24,4 +25,12 @@ const LoginForm = ({user, onLogoutButtonClick, onLoginSubmit,
     );
 };
 
-export default LoginForm;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps)(LoginForm)
+
+// export default LoginForm;
